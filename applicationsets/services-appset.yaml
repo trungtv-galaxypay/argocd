@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices
+  namespace: argocd
+
+spec:
+  goTemplate: true
+
+  generators:
+    - git:
+        repoURL: https://github.com/trungtv-galaxypay/argocd.git
+        revision: main
+        files:
+          - path: services/*/envs/*.yaml
+
+  template:
+    metadata:
+      name: '{{ index .path.segments 1 }}-{{ .envName }}'
+
+    spec:
+      project: default
+
+      source:
+        repoURL: https://github.com/trungtv-galaxypay/argocd.git
+        targetRevision: main
+        path: 'services/{{ index .path.segments 1 }}'
+
+        helm:
+          valueFiles:
+            - 'envs/{{ .valueFile }}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .namespace }}'
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

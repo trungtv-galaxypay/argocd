@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    meta.helm.sh/release-name: skypos-user
+    meta.helm.sh/release-namespace: skypos
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "10"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+  creationTimestamp: "2026-06-01T04:01:04Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: skypos-user
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: skypos-user
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: skypos-user-0.1.0
+  name: skypos-user
+  namespace: skypos
+  resourceVersion: "777977"
+  uid: bb2a846b-2389-4053-b776-624187b0bdfa
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: uat-api-skypos.skypay.vn
+    http:
+      paths:
+      - backend:
+          service:
+            name: skypos-user
+            port:
+              number: 80
+        path: /vj-user/api/v1
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: uat-nginx-nlb-62b9be957e5f5f27.elb.ap-southeast-1.amazonaws.com

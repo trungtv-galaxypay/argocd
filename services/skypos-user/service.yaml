@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: skypos-user
+    meta.helm.sh/release-namespace: skypos
+  creationTimestamp: "2026-06-01T03:12:09Z"
+  labels:
+    app.kubernetes.io/instance: skypos-user
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: skypos-user
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: skypos-user-0.1.0
+  name: skypos-user
+  namespace: skypos
+  resourceVersion: "782126"
+  uid: f440ab3f-5e5d-4e98-932f-66709f771344
+spec:
+  clusterIP: 172.20.5.96
+  clusterIPs:
+  - 172.20.5.96
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8088
+  selector:
+    app.kubernetes.io/instance: skypos-user
+    app.kubernetes.io/name: skypos-user
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
